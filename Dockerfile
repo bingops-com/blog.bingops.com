@@ -22,12 +22,19 @@ RUN set -x \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN set -x \
-    && curl -fsSL https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz | tar -xJ \
+RUN curl -fsSL https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz -o node.tar.xz \
+    && tar -xJf node.tar.xz \
     && mv node-v$NODE_VERSION-linux-x64 /usr/local/node \
     && ln -s /usr/local/node/bin/node /usr/bin/node \
     && ln -s /usr/local/node/bin/npm /usr/bin/npm \
-    && ln -s /usr/local/node/bin/npx /usr/bin/npx
+    && ln -s /usr/local/node/bin/npx /usr/bin/npx \
+    && rm node.tar.xz
+
+RUN curl -fsSL "https://github.com/caddyserver/caddy/releases/download/${CADDY_VERSION}/caddy_${CADDY_VERSION#v}_linux_amd64.tar.gz" -o caddy.tar.gz \
+    && tar -xzf caddy.tar.gz \
+    && mv caddy /usr/bin/caddy \
+    && chmod +x /usr/bin/caddy \
+    && rm caddy.tar.gz
 
 WORKDIR ${APP_DIR}
 
@@ -45,11 +52,11 @@ RUN set -x \
 # Inject Caddyfile
 RUN set -x \
   && mkdir -p /etc/caddy \
-  && useradd --comment 'Astro User' --create-home --uid 1337 --shell /bin/sh astro \
-  && chown -R astro:astro ${APP_DIR} /etc/caddy \
+  && useradd --comment 'Blog User' --create-home --uid 1337 --shell /bin/sh blog \
+  && chown -R blog:blog ${APP_DIR} /etc/caddy \
   && printf ":80\nroot * %s/dist\nfile_server\n" "${APP_DIR}" > /etc/caddy/Caddyfile
 
-USER astro
+USER blog
 
 EXPOSE 80
 CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
