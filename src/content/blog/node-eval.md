@@ -7,7 +7,6 @@ tags: ["cybersecurity", "challenge", "node", "root-me"]
 
 ![Node Eval rootme challenge article illustration](images/node-eval1.png)
 
-# Node - Eval: Rootme Challenge
 First, I want to clarify that I am against cheating; it's entirely unnecessary and silly, so I'll hide the flags/hints out of respect for the platform (although it won't prevent lamers from cheating).
 The challenge has a success rate of 1% at the time of writing this mini-walkthrough, so I decided to write this to share my research.
 

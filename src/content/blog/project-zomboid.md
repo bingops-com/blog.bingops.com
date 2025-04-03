@@ -7,7 +7,6 @@ tags: ["project-zomboid", "ansible", "terraform", "gaming", "infra"]
 
 ![Project Zomboid article illustration](images/project-zomboid1.png)
 
-# Deploying a Project Zomboid Server with Terraform & Ansible
 If you love Project Zomboid and want to host your own dedicated multiplayer server, look no further! This guide introduces an automated deployment system using Terraform and Ansible, allowing you to spin up a server on Proxmox or any remote Linux machine. The project is fully open-source and available on GitHub.
 
 🚀 GitHub Repository: https://github.com/0xBingo/pz-server
